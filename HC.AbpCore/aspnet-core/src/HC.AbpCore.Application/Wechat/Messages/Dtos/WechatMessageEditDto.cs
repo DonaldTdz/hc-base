@@ -2,10 +2,12 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
+using Abp.AutoMapper;
 using HC.AbpCore.Wechat.Subscribes;
 
 namespace HC.AbpCore.Wechat.Messages.Dtos
 {
+    [AutoMapTo(typeof(WechatMessage))]
     public class WechatMessageEditDto : AuditedEntityDto<int?>
     {
 

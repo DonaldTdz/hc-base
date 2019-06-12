@@ -11,7 +11,7 @@ namespace HC.AbpCore.DataDictionarys
     public class DataDictionary : Entity //注意修改主键Id数据类型
     {
         /// <summary>
-        /// 数据分组 枚举（如：项目分类 等）事先定义好分类，维护值
+        /// 数据分组
         /// </summary>
         public virtual DataGroupEnum Group { get; set; }
         /// <summary>
@@ -22,12 +22,12 @@ namespace HC.AbpCore.DataDictionarys
         /// <summary>
         /// 数据字典值
         /// </summary>
-        [StringLength(200)]
+        [StringLength(500)]
         public virtual string Value { get; set; }
         /// <summary>
         /// 数据字典描述
         /// </summary>
-        [StringLength(200)]
+        [StringLength(500)]
         public virtual string Desc { get; set; }
         /// <summary>
         /// 排序

@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using Abp.Domain.Entities.Auditing;
 using Abp.Application.Services.Dto;
 using HC.AbpCore.Wechat.Subscribes;
+using Abp.AutoMapper;
 
 namespace HC.AbpCore.Wechat.Subscribes.Dtos
 {
-    public class WechatSubscribeEditDto:AuditedEntityDto<int?>
+    [AutoMapTo(typeof(WechatSubscribe))]
+    public class WechatSubscribeEditDto : AuditedEntityDto<int?>
     {
 
         ///// <summary>
@@ -16,20 +18,20 @@ namespace HC.AbpCore.Wechat.Subscribes.Dtos
         //public Guid? Id { get; set; }         
 
 
-        
-		/// <summary>
-		/// MsgType
-		/// </summary>
-		[Required(ErrorMessage="MsgType不能为空")]
-		public MsgTypeEnum MsgType { get; set; }
+
+        /// <summary>
+        /// MsgType
+        /// </summary>
+        [Required(ErrorMessage = "MsgType不能为空")]
+        public MsgTypeEnum MsgType { get; set; }
 
 
 
-		/// <summary>
-		/// Content
-		/// </summary>
-		//[Required(ErrorMessage="Content不能为空")]
-		public string Content { get; set; }
+        /// <summary>
+        /// Content
+        /// </summary>
+        //[Required(ErrorMessage="Content不能为空")]
+        public string Content { get; set; }
 
 
         /// <summary>

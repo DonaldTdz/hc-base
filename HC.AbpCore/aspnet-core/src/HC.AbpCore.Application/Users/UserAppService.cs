@@ -168,18 +168,18 @@ namespace HC.AbpCore.Users
         {
             if (_abpSession.UserId == null)
             {
-                throw new UserFriendlyException("Please log in before attemping to change password.");
+                throw new UserFriendlyException("请先登录再修改密码");
             }
             long userId = _abpSession.UserId.Value;
             var user = await _userManager.GetUserByIdAsync(userId);
             var loginAsync = await _logInManager.LoginAsync(user.UserName, input.CurrentPassword, shouldLockout: false);
             if (loginAsync.Result != AbpLoginResultType.Success)
             {
-                throw new UserFriendlyException("Your 'Existing Password' did not match the one on record.  Please try again or contact an administrator for assistance in resetting your password.");
+                throw new UserFriendlyException("您输入的密码不匹配。请重试，或联系系统管理员");
             }
             if (!new Regex(AccountAppService.PasswordRegex).IsMatch(input.NewPassword))
             {
-                throw new UserFriendlyException("Passwords must be at least 8 characters, contain a lowercase, uppercase, and number.");
+                throw new UserFriendlyException("新密码长度至少8位，必须包含大小写字母和数字");
             }
             user.Password = _passwordHasher.HashPassword(user, input.NewPassword);
             CurrentUnitOfWork.SaveChanges();
@@ -190,14 +190,14 @@ namespace HC.AbpCore.Users
         {
             if (_abpSession.UserId == null)
             {
-                throw new UserFriendlyException("Please log in before attemping to reset password.");
+                throw new UserFriendlyException("请先登录再修改密码");
             }
             long currentUserId = _abpSession.UserId.Value;
             var currentUser = await _userManager.GetUserByIdAsync(currentUserId);
             var loginAsync = await _logInManager.LoginAsync(currentUser.UserName, input.AdminPassword, shouldLockout: false);
             if (loginAsync.Result != AbpLoginResultType.Success)
             {
-                throw new UserFriendlyException("Your 'Admin Password' did not match the one on record.  Please try again.");
+                throw new UserFriendlyException("系统管理员密码不匹配，请重试");
             }
             if (currentUser.IsDeleted || !currentUser.IsActive)
             {
@@ -206,7 +206,7 @@ namespace HC.AbpCore.Users
             var roles = await _userManager.GetRolesAsync(currentUser);
             if (!roles.Contains(StaticRoleNames.Tenants.Admin))
             {
-                throw new UserFriendlyException("Only administrators may reset passwords.");
+                throw new UserFriendlyException("只有系统管理员才能重置密码");
             }
 
             var user = await _userManager.GetUserByIdAsync(input.UserId);

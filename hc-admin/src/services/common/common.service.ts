@@ -14,7 +14,7 @@ export class CommonService {
     changePassword(currentPassword: string, newPassword: string): Observable<boolean> {
         let url_ = "/api/services/app/User/ChangePassword";
         let params = { 'currentPassword': currentPassword, 'newPassword': newPassword };
-        return this._commonhttp.post(url_, null, params).pipe(map(data => {
+        return this._commonhttp.post(url_, params).pipe(map(data => {
             console.log(data);
             return <boolean>data;
         }));
